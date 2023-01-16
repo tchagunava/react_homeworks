@@ -1,75 +1,51 @@
+import { useEffect, useState } from 'react';
 import './App.css';
-import React from 'react';
-import "./index.css";
-import Parent from './Parent'
 
-const App = () => {
+const generateUsers = () => {
+  return [
+    { id: 1, name: "Gio" },
+    { id: 2, name: "Tea" },
+    { id: 3, name: "Nuca" },
+    { id: 4, name: "Joni" },
+    { id: 5, name: "Mer" },
+    { id: 6, name: "Mao" },
+    { id: 7, name: "Eou" },
+    { id: 8, name: "Lui" },
+    { id: 9, name: "Low" },
+    { id: 10, name: "Lea" },
+  ];
+};
+
+function App() {
+  const [users, setUsers] = useState([]);
+
+  useEffect(
+    () => {
+      setUsers(generateUsers());
+    }, []
+  )
+
+  useEffect(
+    () => {
+      document.title = `${users.length} user left`;
+    }, [users]
+  );
+
+  const onRemoveUser = () => {
+    setUsers((prevUsers) => {
+      const index = Math.floor(Math.random() * prevUsers.length);
+      const newUsersArray = prevUsers.filter((_, ind) => ind !== index);
+      return newUsersArray;
+    });
+  };
   return (
-    <div className="App">
-      <Parent />
+    <div className='App'>
+      <button onClick={onRemoveUser}>remove user</button>
+      {users.map(({ id, name }) => (
+        <h1 kay={id}>{name}</h1>
+      ))}
     </div>
   );
 }
 
 export default App;
-// პირველი დავალება
-// function App() {
-//   const Users = [
-//     { name: 'john', lname: 'smith', age: 18, id: 1 },
-//     { name: 'tom', lname: 'hertz', age: 19, id: 2 },
-//     { name: 'ben', lname: 'bright', age: 20, id: 3 },
-//     { name: 'don', lname: 'leam', age: 21, id: 4 },
-//     { name: null, lname: null, age: null, id: null },
-
-//   ];
-
-//   return (
-// //     <div>
-//       {Users.map((user) => {
-//         return <h1>{user.name}, {user.lname}, {user.age}, {user.id}</h1>
-//       })}
-// //     </div>
-//   )
-
-//   function Child(Users, isUserLoggedin) {
-//     if (isUserLoggedin = true) {
-//       return (
-//         <div>
-//         </div>
-//       )
-//     }
-//     <div>
-//       no users in the systems
-//     </div>
-//   }
-
-// }
-
-
-// მეორე დავალება
-// function Wrapper() {
-//   return (
-//     <div>
-//       <p>just text</p>
-//     </div>
-//   )
-// }
-
-// function Navbar() {
-//   return (
-//     <div>
-//       <p>just text</p>
-//     </div>
-//   )
-// }
-
-// function Footer() {
-//   return (
-//     <div>
-//       <p>just text</p>
-//     </div>
-//   )
-
-// }
-
-
